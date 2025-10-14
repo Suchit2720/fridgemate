@@ -6,8 +6,8 @@ export default function AboutScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>About This App</Text>
       <Text style={styles.text}>
-        FridgeMate helps you track items you add or delete from your fridge. 
-        You can also scan barcodes to add groceries faster.
+        FridgeMate lets you add, remove, and track fridge items.
+        Scan barcodes to add groceries instantly.
       </Text>
 
       <Button title="Go Back" onPress={() => navigation.goBack()} />
