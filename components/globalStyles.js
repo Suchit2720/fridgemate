@@ -2,7 +2,7 @@
 import { StyleSheet } from 'react-native';
 
 export const globalStyles = StyleSheet.create({
-  // 🌿 Screen layout basics
+  //  Screen layout basics
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -10,7 +10,7 @@ export const globalStyles = StyleSheet.create({
     padding: 20,
   },
 
-  // 🌿 Title text for all screens
+  // Title text for all screens
   title: {
     fontSize: 26,
     fontWeight: 'bold',
@@ -18,7 +18,7 @@ export const globalStyles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  // 🌿 General body text
+  // General body text
   text: {
     fontSize: 16,
     textAlign: 'center',
@@ -26,13 +26,13 @@ export const globalStyles = StyleSheet.create({
     marginBottom: 30,
   },
 
-  // 🌿 Button layout wrapper
+  //  Button layout wrapper
   buttons: {
     width: 220,
     gap: 12, // consistent spacing
   },
 
-  // 🌿 Consistent center alignment
+  // Consistent center alignment
   center: {
     flex: 1,
     alignItems: 'center',
