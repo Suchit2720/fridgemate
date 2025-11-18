@@ -76,42 +76,32 @@ export default function AddItemScreen({ navigation }) {
   const uid = auth.currentUser?.uid;
   if (!uid) return Alert.alert('You must be signed in');
 
-  try {
-    const expString = formatDate(expirationDate);
+    try {
+      const expString = formatDate(expirationDate);
+      await addDoc(collection(db, `users/${uid}/items`), {
+        name,
+        unit,
+        exactAmount: exactAmount ? Number(exactAmount) : null,
+        expiration: expString,
+        createdAt: serverTimestamp(),
+      });
 
-    // write and get the new id
-    const colRef = collection(db, `users/${uid}/items`);
-    const docRef = await addDoc(colRef, {
-      name,
-      unit,
-      exactAmount: exactAmount ? Number(exactAmount) : null,
-      expiration: expString,
-      createdAt: serverTimestamp(),   // required for Home's orderBy
-    });
+      await scheduleExpirationReminders(name, expirationDate);
 
-    // quick debug log
-    console.log('✅ WROTE:', `users/${uid}/items/${docRef.id}`);
+      Alert.alert(
+        '✅ Item Added!',
+        `${name}${exactAmount ? ` (${exactAmount} ${unit})` : ''} (Expires: ${expString})`
+      );
 
-    await scheduleExpirationReminders(name, expirationDate);
-
-    Alert.alert(
-      '✅ Item Added!',
-      `${name}${exactAmount ? ` (${exactAmount} ${unit})` : ''} (Expires: ${expString})`
-    );
-
-    // reset fields
-    setItem('');
-    setUnit('pcs');
-    setExactAmount('');
-    setExpirationDate(new Date());
-
-    // go back to Home to refresh
-    navigation.navigate('Home');
-  } catch (error) {
-    console.error(error);
-    Alert.alert('❌ Error adding item', error.message);
-  }
-};
+      setItem('');
+      setUnit('pcs');
+      setExactAmount('');
+      setExpirationDate(new Date());
+    } catch (error) {
+      console.error(error);
+      Alert.alert('❌ Error adding item', error.message);
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
