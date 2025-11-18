@@ -167,42 +167,52 @@ export default function ProfileScreen({ navigation }) {
           <TextInput style={[styles.input, styles.inputDisabled]} value={profile.email} editable={false} />
         </View>
 
-        {/* Notifications Card */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Notifications</Text>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>Enable notifications</Text>
-            <Switch
-              value={profile.notificationsEnabled}
-              onValueChange={val => handleChange('notificationsEnabled', val)}
-              thumbColor={profile.notificationsEnabled ? COLORS.lightGreen : COLORS.greyLight}
-              trackColor={{ false: COLORS.greyLight, true: COLORS.mutedGreen }}
-            />
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>Push notifications</Text>
-            <Switch
-              value={profile.notifyByPush}
-              onValueChange={val => handleChange('notifyByPush', val)}
-              disabled={!profile.notificationsEnabled}
-              thumbColor={profile.notifyByPush ? COLORS.lightGreen : COLORS.greyLight}
-              trackColor={{ false: COLORS.greyLight, true: COLORS.mutedGreen }}
-            />
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>Email notifications</Text>
-            <Switch
-              value={profile.notifyByEmail}
-              onValueChange={val => handleChange('notifyByEmail', val)}
-              disabled={!profile.notificationsEnabled}
-              thumbColor={profile.notifyByEmail ? COLORS.lightGreen : COLORS.greyLight}
-              trackColor={{ false: COLORS.greyLight, true: COLORS.mutedGreen }}
-            />
-          </View>
-          <Text style={styles.helperText}>
-            These preferences will be used for your fridge reminders.
-          </Text>
-        </View>
+{/* Notifications Card */}
+<View style={styles.card}>
+  <Text style={styles.cardTitle}>Notifications</Text>
+  <View style={styles.row}>
+    <Text style={styles.rowLabel}>Enable notifications</Text>
+    <Switch
+      value={profile.notificationsEnabled}
+      onValueChange={val => handleChange('notificationsEnabled', val)}
+      thumbColor={profile.notificationsEnabled ? COLORS.lightGreen : COLORS.greyLight}
+      trackColor={{ false: COLORS.greyLight, true: COLORS.mutedGreen }}
+    />
+  </View>
+  <View style={styles.row}>
+    <Text style={styles.rowLabel}>Push notifications</Text>
+    <Switch
+      value={profile.notifyByPush}
+      onValueChange={val => handleChange('notifyByPush', val)}
+      disabled={!profile.notificationsEnabled}
+      thumbColor={profile.notifyByPush ? COLORS.lightGreen : COLORS.greyLight}
+      trackColor={{ false: COLORS.greyLight, true: COLORS.mutedGreen }}
+    />
+  </View>
+  <View style={styles.row}>
+    <Text style={styles.rowLabel}>Email notifications</Text>
+    <Switch
+      value={profile.notifyByEmail}
+      onValueChange={val => handleChange('notifyByEmail', val)}
+      disabled={!profile.notificationsEnabled}
+      thumbColor={profile.notifyByEmail ? COLORS.lightGreen : COLORS.greyLight}
+      trackColor={{ false: COLORS.greyLight, true: COLORS.mutedGreen }}
+    />
+  </View>
+
+  {/* ✅ New Button */}
+<TouchableOpacity
+  style={styles.actionBtn}
+  onPress={() => navigation.navigate('Notifications2')}
+>
+  <Text style={styles.actionText}>Edit Notifications</Text>
+</TouchableOpacity>
+
+  <Text style={styles.helperText}>
+    These preferences will be used for your fridge reminders.
+  </Text>
+</View>
+
       </ScrollView>
     </View>
   );
