@@ -46,7 +46,6 @@ export default function HomeScreen({ navigation }) {
     const unsub = onSnapshot(q, (snap) => {
       setItems(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
     });
-
     return unsub;
   }, []);
 
@@ -388,6 +387,12 @@ const fetchRecipes = async () => {
           )}
         </View>
 
+        {item.details ? (
+          <Text style={styles.itemDescription} numberOfLines={2}>
+            {item.details}
+          </Text>
+        ) : null}
+
         {displayAmount ? <Text style={styles.itemDetail}>Quantity: {displayAmount}</Text> : null}
         {item.expiration ? <Text style={styles.itemDetail}>Expires: {item.expiration}</Text> : null}
       </TouchableOpacity>
@@ -551,6 +556,7 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   itemName: { fontSize: 16, fontWeight: '700', color: '#fff' },
+  itemDescription: { fontSize: 14, color: '#d3f2d9', marginTop: 6 },
   itemDetail: { fontSize: 14, color: '#ffffffbb', marginTop: 4 },
   addButton: {
     paddingVertical: 14,
