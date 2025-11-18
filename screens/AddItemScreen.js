@@ -70,11 +70,11 @@ export default function AddItemScreen({ navigation }) {
   };
 
   const addItem = async () => {
-    const name = item.trim();
-    if (!name) return Alert.alert('Please enter an item name');
+  const name = item.trim();
+  if (!name) return Alert.alert('Please enter an item name');
 
-    const uid = auth.currentUser?.uid;
-    if (!uid) return Alert.alert('You must be signed in');
+  const uid = auth.currentUser?.uid;
+  if (!uid) return Alert.alert('You must be signed in');
 
     try {
       const expString = formatDate(expirationDate);

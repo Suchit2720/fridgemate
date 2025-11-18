@@ -46,7 +46,6 @@ export default function HomeScreen({ navigation }) {
     const unsub = onSnapshot(q, (snap) => {
       setItems(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
     });
-
     return unsub;
   }, []);
 
@@ -323,6 +322,12 @@ export default function HomeScreen({ navigation }) {
           )}
         </View>
 
+        {item.details ? (
+          <Text style={styles.itemDescription} numberOfLines={2}>
+            {item.details}
+          </Text>
+        ) : null}
+
         {displayAmount ? <Text style={styles.itemDetail}>Quantity: {displayAmount}</Text> : null}
         {item.expiration ? <Text style={styles.itemDetail}>Expires: {item.expiration}</Text> : null}
       </TouchableOpacity>
@@ -459,12 +464,11 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  headerText: { color: '#fff', marginRight: 8, fontWeight: '600', fontFamily: 'Avenir' },
   glassCard: {
     width: '100%',
     padding: 16,
     borderRadius: 20,
-    backgroundColor: 'rgba(48, 96, 53, 0.27)',
+    backgroundColor: 'rgba(0, 0, 0, 0.16)',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.12)',
     marginVertical: 6,
@@ -474,14 +478,17 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     elevation: 6,
   },
-  itemName: { fontSize: 16, fontWeight: '700', color: '#fff', fontFamily: 'Avenir' },
-  itemDetail: { fontSize: 14, color: '#ffffffbb', marginTop: 4, fontFamily: 'Avenir' },
-  addButton: { paddingVertical: 14, borderRadius: 14, alignItems: 'center' },
-  addButtonText: { color: '#fff', fontWeight: '700', fontSize: 18, fontFamily: 'Avenir' },
-  popupTitle: { color: '#fff', fontSize: 18, fontWeight: '700', fontFamily: 'Avenir' },
-  popupLabel: { color: '#fff', fontSize: 14, marginRight: 8, fontFamily: 'Avenir' },
-  recipeTitle: { color: '#fff', fontSize: 16, fontFamily: 'Avenir', fontWeight: '600' },
-  recipeDetailTitle: { color: '#fff', fontSize: 20, fontWeight: '700', marginBottom: 8, fontFamily: 'Avenir' },
-  recipeDetailLabel: { color: '#fff', fontWeight: '600', marginBottom: 4, fontFamily: 'Avenir' },
-  recipeDetailText: { color: '#fff', marginBottom: 12, fontFamily: 'Avenir' },
+  itemName: { fontSize: 16, fontWeight: '700', color: '#fff' },
+  itemDescription: { fontSize: 14, color: '#d3f2d9', marginTop: 6 },
+  itemDetail: { fontSize: 14, color: '#ffffffbb', marginTop: 4 },
+  addButton: {
+    paddingVertical: 14,
+    borderRadius: 14,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 18,
+  },
 });
