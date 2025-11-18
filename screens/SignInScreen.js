@@ -1,10 +1,11 @@
 // screens/SignInScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../src/lib/firebase';
 import { globalStyles } from '../components/globalStyles';
 import RadiantBackground from '../components/RadiantBackground';
+import { Video } from 'expo-av';
 
 export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -20,9 +21,22 @@ export default function SignInScreen({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <RadiantBackground />
+      {/* Background video */}
+      <Video
+        source={require('../assets/background.mp4')}
+        rate={1.0}
+        volume={0}
+        isMuted
+        resizeMode="cover"
+        shouldPlay
+        isLooping
+        style={StyleSheet.absoluteFill}
+      />
+      {/* Optional overlay for better contrast */}
+      <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0,0,0,0.25)' }]} />
+
       <View style={[globalStyles.container, { paddingHorizontal: 20 }]}>
-        <Text style={globalStyles.title}>Welcome back</Text>
+        <Text style={[globalStyles.title, { fontFamily: 'Avenir' }]}>Welcome back</Text>
 
         <TextInput
           value={email}
@@ -30,29 +44,61 @@ export default function SignInScreen({ navigation }) {
           placeholder="Email"
           keyboardType="email-address"
           autoCapitalize="none"
-          style={{
-            width: '90%', borderWidth: 1, borderColor: '#ccc',
-            padding: 12, borderRadius: 10, marginBottom: 12,
-          }}
+          placeholderTextColor="#ccc"
+          style={styles.input}
         />
         <TextInput
           value={pass}
           onChangeText={setPass}
           placeholder="Password"
           secureTextEntry
-          style={{
-            width: '90%', borderWidth: 1, borderColor: '#ccc',
-            padding: 12, borderRadius: 10, marginBottom: 16,
-          }}
+          placeholderTextColor="#ccc"
+          style={styles.input}
         />
-        <View style={globalStyles.buttons}>
-          <Button title="Sign In" onPress={signIn} />
-          <Button
-            title="Create account"
+
+        <View style={styles.buttons}>
+          <TouchableOpacity style={styles.btn} onPress={signIn}>
+            <Text style={styles.btnText}>Sign In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.btn, { backgroundColor: '#18311ebd' }]}
             onPress={() => navigation.navigate('SignUp')}
-          />
+          >
+            <Text style={styles.btnText}>Create account</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    width: '90%',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 12,
+    color: '#fff',
+    fontFamily: 'Avenir',
+  },
+  buttons: {
+    width: '90%',
+    alignItems: 'center',
+  },
+  btn: {
+    width: '100%',
+    backgroundColor: '#274e30bd',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  btnText: {
+    color: '#fff',
+    fontFamily: 'Avenir',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});

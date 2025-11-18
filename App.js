@@ -1,7 +1,7 @@
 // App.js
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
-import { StatusBar, TouchableOpacity, Alert } from 'react-native';
+import { StatusBar, TouchableOpacity, Alert, Text as RNText } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -12,7 +12,8 @@ import * as Notifications from 'expo-notifications';
 import HomeScreen from './screens/HomeScreen';
 import AddItemScreen from './screens/AddItemScreen';
 import BarcodeScannerScreen from './screens/BarcodeScannerScreen';
-import NotificationsScreen from './screens/NotificationsScreen';
+import NotificationsScreen from './screens/NotificationsScreen'; // Profile screen
+import Notifications2 from './screens/Notifications2'; // Actual notifications editor
 import DeleteItemScreen from './screens/DeleteItemScreen';
 import PreferencesScreen from './screens/PreferencesScreen';
 import SplashScreen from './screens/SplashScreen';
@@ -21,11 +22,14 @@ import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 
-const BRAND = { green: '#175831ff', greenLight: '#E9F7EF' };
-
+const BRAND = { green: '#134b16ff', greenLight: '#E9F7EF' };
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
+
+// 🌿 GLOBAL TEXT OVERRIDE: All <Text> uses Avenir
+RNText.defaultProps = RNText.defaultProps || {};
+RNText.defaultProps.style = { fontFamily: 'Avenir' };
 
 // --- Notification registration ---
 export const registerForNotifications = async () => {
@@ -109,7 +113,7 @@ function MainTabs() {
         />
         <Tab.Screen
           name="Profile"
-          component={NotificationsScreen}
+          component={NotificationsScreen} // ✅ use the Profile screen (legacy NotificationsScreen)
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="person-outline" size={size} color={color} />
@@ -141,6 +145,7 @@ function RootNavigator() {
       ) : (
         <>
           <Stack.Screen name="Root" component={MainTabs} />
+
           <Stack.Screen
             name="DeleteItem"
             component={DeleteItemScreen}
@@ -156,6 +161,16 @@ function RootNavigator() {
               headerTintColor: '#fff',
             }}
           />
+          <Stack.Screen
+            name="Notifications2"
+            component={Notifications2}
+            options={{
+              headerShown: true,
+              title: 'Edit Notifications',
+              headerStyle: { backgroundColor: BRAND.green },
+              headerTintColor: '#fff',
+            }}
+          />
         </>
       )}
     </Stack.Navigator>
@@ -164,7 +179,6 @@ function RootNavigator() {
 
 export default function App() {
   useEffect(() => {
-    // request notification permissions on app start
     registerForNotifications();
   }, []);
 

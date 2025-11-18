@@ -16,6 +16,7 @@ export const globalStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#0B3D0B', // deep green
     marginBottom: 10,
+    fontFamily: 'Avenir', // ✅ global font
   },
 
   // General body text
@@ -24,6 +25,7 @@ export const globalStyles = StyleSheet.create({
     textAlign: 'center',
     color: '#114D1A', // softer green
     marginBottom: 30,
+    fontFamily: 'Avenir', // ✅ global font
   },
 
   //  Button layout wrapper
@@ -42,5 +44,12 @@ export const globalStyles = StyleSheet.create({
   // 🌿 Global background color (if ever needed)
   background: {
     backgroundColor: '#E9F7EF', // pale green tint
+  },
+
+  // 🌿 Extra reusable text style for small text/buttons
+  smallText: {
+    fontSize: 14,
+    fontFamily: 'Avenir', // ✅ ensure consistent small text
+    color: '#114D1A',
   },
 });
